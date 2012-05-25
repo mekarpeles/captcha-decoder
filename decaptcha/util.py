@@ -2,7 +2,7 @@ import os
 import string
 from PIL import Image
 
-ICONSET = list(string.lowercase + string.digits)
+ICONSET = list(string.digits + string.lowercase)
 
 def buildvector(im):
   d1 = {}
