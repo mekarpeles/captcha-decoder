@@ -58,7 +58,7 @@ for x in range(im.size[1]):
   for y in range(im.size[0]):
     pix = im.getpixel((y,x))
     temp[pix] = pix
-    if pix == 220 or pix == 227: # these are the numbers to get
+    if pix < 10: # these are the numbers to get
       im2.putpixel((y,x),0)
     
 inletter = False
