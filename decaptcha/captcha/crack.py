@@ -60,6 +60,9 @@ for x in range(im.size[1]):
     temp[pix] = pix
     if pix < 10: # these are the numbers to get
       im2.putpixel((y,x),0)
+
+im2.save("output.gif")
+
     
 inletter = False
 foundletter=False
