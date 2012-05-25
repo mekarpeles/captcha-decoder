@@ -61,11 +61,8 @@ for letter in iconset:
   for img in os.listdir('./iconset/%s/'%(letter)):
     temp = []
     if img != "Thumbs.db": # windows check...
-        im = Image.open("./iconset/%s/%s"%(letter,img))
-	im = crop_white(im)
-	im.save("output%s.gif"%(count2))
-	count2 = count2+1
-	temp.append(buildvector(crop_white(Image.open("./iconset/%s/%s"%(letter,img)))))       
+	im = Image.open("./iconset/%s/%s"%(letter,img))
+	temp.append(buildvector(im))       
     imageset.append({letter:temp})
 
 
