@@ -18,8 +18,7 @@ def crop_white(img):
     		min_coord = min(min_coord,x)
     		max_coord = max(max_coord,x)
 
-  img = img.crop(( 0, min_coord, img.size[0], max_coord))
-  return img
+  return img.crop(( 0, min_coord, img.size[0], max_coord))
 
 class VectorCompare:
 
@@ -36,7 +35,6 @@ class VectorCompare:
 
 def buildvector(im):
   d1 = {}
-
   count = 0
   for i in im.getdata():
     d1[count] = i
