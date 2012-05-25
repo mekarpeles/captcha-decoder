@@ -94,6 +94,10 @@ for letter in letters:
   m = hashlib.md5()
   im3 = im2.crop(( letter[0] , 0, letter[1],im2.size[1] ))
 
+  m.update("%s%s"%(time.time(),count))
+  im3.save("./%s--%s.gif"%(count,m.hexdigest()))
+  count += 1
+
   guess = []
 
   for image in imageset:
