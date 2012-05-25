@@ -23,14 +23,11 @@ def crop_white(img):
 
 def build_imgset():
     imageset = []
-    for count, character in enumerate(ICONSET):
-        for img in os.listdir('./iconset/%s/' % (character)):
-            temp = []
-            if img != "Thumbs.db": # windows check...
-                im = Image.open("./iconset/%s/%s" % (character, img))
-                im = crop_white(im)
-                im.save("output-%s.gif" % (count))
-                im.save("./iconset/%s/%s" % (character, img))
-                temp.append(buildvector(im))
-            imageset.append({character: temp})
+    for letter in ICONSET:
+      for img in os.listdir('./iconset/%s/'%(letter)):
+        temp = []
+        if img != "Thumbs.db": # windows check...
+          im = Image.open("./iconset/%s/%s"%(letter,img))
+          temp.append(im)       
+        imageset.append({letter:temp})
     return imageset

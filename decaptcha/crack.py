@@ -35,11 +35,13 @@ def relation(concordance1, concordance2):
   """
   """
   relevance = 0
-  topvalue = 0
   for word, count in concordance1.iteritems():
-    if concordance2.has_key(word):
-      topvalue += count * concordance2[word]
-  return topvalue / (magnitude(concordance1) * magnitude(concordance2))
+    if concordance2.has_key(word) and count == concordance2[word]:
+      if count == 0:
+        relevance += 5
+      else:
+        relevance += 1
+  return float(relevance)/float(len(concordance2))
 
 def preprocess_captcha(captcha):
   """
@@ -91,7 +93,8 @@ def segment_characters(im, characters):
   segments = []
   for count, character in enumerate(characters):
     segment_filename = "./output/%s_%s.gif" % (int(time.time()), count)
-    segment = im.crop(( character[0], 0, character[1], im.size[1] ))
+    segment = crop_white(im.crop((character[0], 0,
+                                  character[1], im.size[1])))
     segment.save(segment_filename)
     segments.append(segment)
   return segments
@@ -104,8 +107,11 @@ def guess_characters(segments):
     guess = []
     for icon in IMAGESET:
       for x,y in icon.iteritems():
-        if len(y) != 0:
-          guess.append((relation(y[0], buildvector(segment)), x))
+        if len(y):
+          for option in y:
+            im4 = segment.resize(option.size)
+            guess.append((relation(buildvector(option),
+                                   buildvector(im4)),x))
     guess.sort(reverse=True)
     print "", guess[0]
 
