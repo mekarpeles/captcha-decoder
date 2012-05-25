@@ -18,7 +18,6 @@ def crop_white(img):
     		max_coord = max(max_coord,x)
 
   img = img.crop(( 0, min_coord, img.size[0], max_coord))
-  return img;
 
 
 class VectorCompare:
@@ -62,6 +61,10 @@ for letter in iconset:
     temp = []
     if img != "Thumbs.db": # windows check...
 	im = Image.open("./iconset/%s/%s"%(letter,img))
+	crop_white(im)
+	im.save("output-%s.gif"%(count2))
+	count2 = count2+1
+	im.save("./iconset/%s/%s"%(letter,img))
 	temp.append(buildvector(im))       
     imageset.append({letter:temp})
 
