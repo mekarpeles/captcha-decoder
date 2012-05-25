@@ -55,16 +55,11 @@ iconset = ['0','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','
 
 imageset = []
 
-count2=0
 for letter in iconset:
   for img in os.listdir('./iconset/%s/'%(letter)):
     temp = []
     if img != "Thumbs.db": # windows check...
 	im = Image.open("./iconset/%s/%s"%(letter,img))
-	im=crop_white(im)
-	im.save("output-%s.gif"%(count2))
-	count2 = count2+1
-	im.save("./iconset/%s/%s"%(letter,img))
 	temp.append(buildvector(im))       
     imageset.append({letter:temp})
 
@@ -114,7 +109,7 @@ for letter in letters:
   m = hashlib.md5()
   im3 = im2.crop(( letter[0] , 0, letter[1],im2.size[1] ))
 
-  crop_white(im3)
+  im3=crop_white(im3)
 
   m.update("%s%s"%(time.time(),count))
   im3.save("./%s--%s.gif"%(count,m.hexdigest()))
