@@ -7,7 +7,7 @@ import os
 import math
 
 
-def crop_white(img)
+def crop_white(img):
   min_coord = img.size[1]+10
   max_coord = -1
   for y in range(img.size[0]): # slice across
@@ -56,11 +56,16 @@ iconset = ['0','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','
 
 imageset = []
 
+count2=0
 for letter in iconset:
   for img in os.listdir('./iconset/%s/'%(letter)):
     temp = []
     if img != "Thumbs.db": # windows check...
-      temp.append(buildvector(crop_white(Image.open("./iconset/%s/%s"%(letter,img)))))
+        im = Image.open("./iconset/%s/%s"%(letter,img))
+	im = crop_white(im)
+	im.save("output%s.gif"%(count2))
+	count2 = count2+1
+	temp.append(buildvector(crop_white(Image.open("./iconset/%s/%s"%(letter,img)))))       
     imageset.append({letter:temp})
 
 
