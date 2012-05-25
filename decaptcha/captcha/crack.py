@@ -95,7 +95,11 @@ for letter in letters:
   im3 = im2.crop(( letter[0] , 0, letter[1],im2.size[1] ))
 
   # Crop whitespace at the top/bottom
-  min_coord=im3.size[1]+10, max_coord=-1
+  min_coord = im3.size[1]+10
+  max_coord = -1
+  print(min_coord)
+  print(max_coord)
+
   for y in range(im3.size[0]): # slice across
     for x in range(im3.size[1]): # slice down
     	pix = im2.getpixel((y,x))
@@ -103,21 +107,9 @@ for letter in letters:
     		min_coord = min(min_coord,x)
     		max_coord = max(max_coord,x)
 
+  print(min_coord)
+  print(max_coord)
   im3 = im3.crop(( 0, min_coord, im3.size[0], max_coord))    
-
-  if foundletter == False and inletter == True:
-    foundletter = True
-    start = y
-
-  if foundletter == True and inletter == False:
-    foundletter = False
-    end = y
-    letters.append((start,end))
-
-
-  inletter=False
-
-
 
 
   m.update("%s%s"%(time.time(),count))
