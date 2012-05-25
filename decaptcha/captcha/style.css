@@ -1,0 +1,27 @@
+body {
+	font-family: Arial;
+}
+div.legal {
+	background: #AAAAAA;
+	border: thick dotted #AA0000;
+	padding: 7px;
+}
+div.example {
+	padding: 5px;
+	background: #EEEEEE;
+	margin-left: 30px;
+	margin-right: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-left: thin dotted #0000AA;
+}
+pre {
+	padding: 5px;
+	background: #E1E1E1;
+	margin-left: 30px;
+	margin-right: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-left: thin solid #0000AA;
+}	
+}
