@@ -7,7 +7,7 @@
     This module takes captcha images as input and partitions them into
     n new images, 1 image per character found within the captcha.
 
-    Originally written by bboyte01@gmail.com, http://www.wausita.com/captcha/
+    Original by bboyte01@gmail.com, http://www.wausita.com/captcha/
 
     :copyright: (c) 2012 by Abel and Mek
     :license: Creative Commons, see LICENSE for more details.
@@ -15,16 +15,15 @@
 
 import hashlib
 import time
-import os
 import math
 import string
 from PIL import Image
 from datetime import datetime
-from util import build_imgset
+from util import build_imgset, buildvector, crop_white
 
-IMAGESET = build_imageset()
+IMAGESET = build_imgset()
 
-def magnitude(self, concordance):
+def magnitude(concordance):
   """
   """
   total = 0
@@ -32,7 +31,7 @@ def magnitude(self, concordance):
     total += count ** 2
   return math.sqrt(total)
 
-def relation(self, concordance1, concordance2):
+def relation(concordance1, concordance2):
   """
   """
   relevance = 0
@@ -42,32 +41,22 @@ def relation(self, concordance1, concordance2):
       topvalue += count * concordance2[word]
   return topvalue / (magnitude(concordance1) * magnitude(concordance2))
 
-
-
-def crack_captcha(captcha):
-  """currently only works with gifs"""  
-  im2 = preprocess_captcha(captcha)
-  characters = find_characters(im2)
-  save_characters(im2, captcha, characters)
-
 def preprocess_captcha(captcha):
   """
   """
-  im = Image.open("captcha.gif")
-  im1 = im.convert("P")
+  im = Image.open(captcha).convert("P")
   im2 = Image.new("P", im.size,255)
-
   temp = {}
-  for x in range(im1.size[1]):
-    for y in range(im1.size[0]):
-      pix = im1.getpixel((y,x))
+  for x in range(im.size[1]):
+    for y in range(im.size[0]):
+      pix = im.getpixel((y,x))
       temp[pix] = pix
       if pix < 10: # these are the numbers to get
         im2.putpixel((y,x),0)
-  im2.save("output.gif")
+  im2.save("./output/output.gif")
   return im2
 
-def find_characters(im2):
+def find_characters(im):
   """Split up the preprocessed captcha to find individual characters
   and accumulate a list of its start and end coordinates
   """
@@ -77,9 +66,9 @@ def find_characters(im2):
   start = 0
   end = 0
 
-  for y in range(im2.size[0]): # slice across
-    for x in range(im2.size[1]): # slice down
-      pix = im2.getpixel((y,x))
+  for y in range(im.size[0]): # slice across
+    for x in range(im.size[1]): # slice down
+      pix = im.getpixel((y,x))
       if pix != 255:
         inletter = True
 
@@ -95,29 +84,43 @@ def find_characters(im2):
     inletter=False
   return letters
 
-def save_characters(im2, captcha, letters):
+def segment_characters(im, characters):
+  """Iterates over all discrete segments containing characters found
+  within the captcha, crops them and saved them as individual icons
   """
-  """
-  count = 0
-  for letter in letters:
-    guess = []
-    im3 = im2.crop(( letter[0] , 0, letter[1],im2.size[1] ))
-    im3_filename = "./output/%s-%s_%s.gif" % (captcha, count, int(time.time()))
-    im3.save(im3_filename)
-    count += 1
+  segments = []
+  for count, character in enumerate(characters):
+    segment_filename = "./output/%s_%s.gif" % (int(time.time()), count)
+    segment = im.crop(( character[0], 0, character[1], im.size[1] ))
+    segment.save(segment_filename)
+    segments.append(segment)
+  return segments
 
-    for character in IMAGESET:
-      for x,y in character.iteritems():
+def guess_characters(segments):
+  """Loops over each segment and attempts to guess what character is
+  contained within the cropped img
+  """
+  for segment in segments:
+    guess = []
+    for icon in IMAGESET:
+      for x,y in icon.iteritems():
         if len(y) != 0:
-          guess.append((relation(y[0], buildvector(im3)), x))
-          
+          guess.append((relation(y[0], buildvector(segment)), x))
     guess.sort(reverse=True)
     print "", guess[0]
-    count += 1
 
-#if __name__ == "__main__":
-try:
-  captcha = sys.argv[1]
-except:
-  captcha = "captcha.gif"
-crack_captcha(captcha)
+def crack_captcha(captcha):
+  """driver/entry point for crack.py
+  currently only works with gifs
+  """    
+  im = preprocess_captcha(captcha)
+  chars = find_characters(im)
+  segments = segment_characters(im, chars)
+  guess_characters(segments)
+
+if __name__ == "__main__":
+  try:
+    captcha = sys.argv[1]
+  except:
+    captcha = "captcha.gif"
+  crack_captcha(captcha)
