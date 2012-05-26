@@ -1,5 +1,5 @@
 
-output/*
+decaptcha/output/*
 
 *.py[co]
 
