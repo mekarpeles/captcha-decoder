@@ -12,13 +12,14 @@
     :copyright: (c) 2012 by Abel and Mek
     :license: Creative Commons, see LICENSE for more details.
 """
-
+import os
+import sys
 import time
 import math
 import string
 from PIL import Image
 from datetime import datetime
-from util import build_imgset, buildvector, crop_white
+from util import build_imgset, buildvector, crop_white, APP_PATH
 
 IMAGESET = build_imgset()
 
@@ -46,12 +47,15 @@ def preprocess_captcha(captcha, timestamp):
       temp[pix] = pix
       if pix < 10: # these are the numbers to get
         im2.putpixel((y,x),0)
-  im2.save("./output/%s_output.gif" % timestamp)
+  im2.save(APP_PATH + "/output/%s_output.gif" % timestamp)
   return im2
 
 def find_partitions(im):
-  """Split up the preprocessed captcha to find individual characters
-  and accumulate a list of its start and end coordinates
+  """Find discrete partitions within the preprocessed captcha to find
+  regions containing individual characters. Returns an accumuated list
+  of (start, end) coordinates for this region. Partitions are
+  calculated based on the existence of characters within the image, as
+  determined by surrounding white space.
   """
   letters = []
   inletter = False
@@ -62,7 +66,7 @@ def find_partitions(im):
   for y in range(im.size[0]): # slice across
     for x in range(im.size[1]): # slice down
       pix = im.getpixel((y,x))
-      if pix != 255:
+      if not pix == 255:
         inletter = True
 
     if not foundletter and inletter:
@@ -83,7 +87,7 @@ def segment_captcha(im, partitions, timestamp):
   """
   segments = []
   for count, partition in enumerate(partitions):
-    segment_filename = "./output/%s_%s.gif" % (timestamp, count)
+    segment_filename = APP_PATH + "/output/%s_%s.gif" % (timestamp, count)
     segment = crop_white(im.crop((partition[0], 0,
                                   partition[1], im.size[1])))
     segment.save(segment_filename)
@@ -119,6 +123,7 @@ def crack_captcha(captcha):
 if __name__ == "__main__":
   try:
     captcha = sys.argv[1]
+    print sys.argv[1]
   except:
-    captcha = "captcha.jpg"
+    captcha = APP_PATH + "captcha.jpg"
   crack_captcha(captcha)
