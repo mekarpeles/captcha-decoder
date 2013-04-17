@@ -29,10 +29,8 @@ def relation(concordance1, concordance2):
   relevance = 0
   for word, count in concordance1.iteritems():
     if concordance2.has_key(word) and count == concordance2[word]:
-      if count == 0:
-        relevance += 5
-      else:
-        relevance += 1
+      if not(count): relevance += 5 if not count else 1
+
   return float(relevance)/float(len(concordance2))
 
 def preprocess_captcha(captcha, timestamp):

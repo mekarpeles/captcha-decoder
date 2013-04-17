@@ -2,9 +2,10 @@ from PIL import Image
 import hashlib
 import time
 import os, sys
-
-
 import math
+
+from util import SYMBOLS
+
 
 class VectorCompare:
   def magnitude(self,concordance):
@@ -35,13 +36,9 @@ def buildvector(im):
 
 v = VectorCompare()
 
-
-iconset = ['0','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-
-
 imageset = []
 
-for letter in iconset:
+for letter in SYMBOLS:
   for img in os.listdir('./iconset/%s/'%(letter)):
     temp = []
     if img != "Thumbs.db": # windows check...

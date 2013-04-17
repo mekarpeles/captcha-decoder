@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import sys
+import os
+from decaptcha import crack
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Basic Captcha Cracker")
+    parser.add_argument('captcha', nargs='?', metavar='<img>',
+                        help="Enter the path of a captcha img file (.jpg)")
+    args = parser.parse_args()
+    if not args.captcha:
+        raise ValueError("No captcha input image provided")
+    if args.captcha[0] is not "/":
+         args.captcha = "%s/%s" % (os.path.dirname(__file__), args.captcha)
+    print crack.decode(args.captcha)
+
+
+
+

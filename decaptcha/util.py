@@ -2,8 +2,8 @@ import os
 import string
 from PIL import Image
 
-ICONSET = list(string.digits + string.lowercase)
-APP_PATH = os.getcwd()
+SYMBOLS = list(string.digits + string.lowercase)
+APP_PATH = os.path.dirname(__file__)
 
 def buildvector(im):
   d1 = {}
@@ -24,11 +24,11 @@ def crop_white(img):
 
 def build_imgset():
     imageset = []
-    for letter in ICONSET:
-      for img in os.listdir(APP_PATH + '/iconset/%s/'%(letter)):
+    for letter in SYMBOLS:
+      for img in os.listdir(APP_PATH + '/iconset/%s/' % (letter)):
         temp = []
         if img != "Thumbs.db": # windows check...
-          im = Image.open(APP_PATH + "/iconset/%s/%s"%(letter,img))
+          im = Image.open(APP_PATH + "/iconset/%s/%s" % (letter,img))
           temp.append(im)       
         imageset.append({letter:temp})
     return imageset
