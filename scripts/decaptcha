@@ -2,6 +2,7 @@
 
 import sys
 import os
+import argparse
 from decaptcha import crack
 
 if __name__ == "__main__":
