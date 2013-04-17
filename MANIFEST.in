@@ -1,1 +1,2 @@
-decaptcha/iconset/*
+recursive-include decaptcha/iconset *.gif
+recursive-include examples *.jpg
