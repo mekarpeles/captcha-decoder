@@ -25,10 +25,10 @@ def crop_white(img):
 def build_imgset():
     imageset = []
     for letter in SYMBOLS:
-      for img in os.listdir(APP_PATH + '/iconset/%s/' % (letter)):
+      for img in os.listdir('%s/iconset/%s/' % (APP_PATH, letter)):
         temp = []
         if img != "Thumbs.db": # windows check...
-          im = Image.open(APP_PATH + "/iconset/%s/%s" % (letter,img))
+          im = Image.open("%s/iconset/%s/%s" % (APP_PATH, letter, img))
           temp.append(im)       
         imageset.append({letter:temp})
     return imageset
