@@ -55,7 +55,7 @@ def find_letters(im2):
             foundletter = True
             start = y
 
-        if foundletter and not:
+        if foundletter and not inletter:
             foundletter = False
             end = y
             letters.append((start,end))
