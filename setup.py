@@ -10,7 +10,10 @@
     $ pip install waltz    
 """
 
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 import os
 
 setup(
