@@ -82,11 +82,11 @@ for filename in os.listdir('./examples/'):
       if pix != 255:
         inletter = True
 
-    if foundletter == False and inletter == True:
+    if foundletter is False and inletter is True:
       foundletter = True
       start = y
 
-    if foundletter == True and inletter == False:
+    if foundletter isf True and inletter is False:
       foundletter = False
       end = y
       letters.append((start,end))
