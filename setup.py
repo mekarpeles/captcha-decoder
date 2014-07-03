@@ -1,13 +1,9 @@
 #-*- coding: utf-8 -*-
 
 """
-    waltz
-    ~~~~~
+    decaptcha
+    ~~~~~~~~~
 
-    Setup
-    `````
-
-    $ pip install waltz    
 """
 
 from distutils.core import setup
