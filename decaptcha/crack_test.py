@@ -86,7 +86,7 @@ for filename in os.listdir('./examples/'):
       foundletter = True
       start = y
 
-    if foundletter isf True and inletter is False:
+    if foundletter is True and inletter is False:
       foundletter = False
       end = y
       letters.append((start,end))
