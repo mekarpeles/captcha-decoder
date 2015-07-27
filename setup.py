@@ -30,4 +30,5 @@ setup(
         ],
     description="Basic Captcha Cracker",
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
+    include_package_data=True
 )
