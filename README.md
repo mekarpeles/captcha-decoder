@@ -6,7 +6,7 @@ what it believes are n new images, where each new image is a discrete
 character found within the original captcha.
 
 This work is a derivation of an original work by bboyte01@gmail.com,
-http://www.wausita.com/captcha/.
+http://www.boyter.org/decoding-captchas/.
 
 ## Example
 
