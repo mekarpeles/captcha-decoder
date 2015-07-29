@@ -1,10 +1,12 @@
 import hashlib
 import os
 import math
-
 from PIL import Image
+from .util import SYMBOLS
 
-from util import SYMBOLS
+PATH = os.path.dirname(os.path.realpath(__file__))
+ICONSET_PATH = os.path.join(PATH, 'iconset')
+DATA_PATH = os.path.abspath(os.path.join(PATH, os.pardir))
 
 
 class VectorCompare(object):
@@ -21,7 +23,8 @@ class VectorCompare(object):
         for word, count in concordance1.iteritems():
             if word in concordance2:
                 topvalue += count * concordance2[word]
-        return topvalue / (self.magnitude(concordance1) * self.magnitude(concordance2))
+        return topvalue / (self.magnitude(concordance1)
+                           * self.magnitude(concordance2))
 
 
 def buildvector(img):
@@ -39,24 +42,24 @@ v = VectorCompare()
 imageset = []
 
 for letter in SYMBOLS:
-    for im in os.listdir('./iconset/%s/' % letter):
+    for im in os.listdir(os.path.join(ICONSET_PATH, letter)):
         temp = []
         if im != 'Thumbs.db':  # windows check...
-            temp.append(buildvector(Image.open('./iconset/%s/%s' % (letter, im))))
+            temp.append(buildvector(
+                Image.open(os.path.join(ICONSET_PATH, letter, im))))
         imageset.append({letter: temp})
 
 correctcount = 0
 wrongcount = 0
 
 
-for filename in os.listdir('../examples/'):
+for filename in os.listdir(DATA_PATH):
     try:
-        im = Image.open('../examples/%s' % filename)
+        im = Image.open(os.path.join(DATA_PATH, filename))
     except:
         break
 
-    print ''
-    print filename
+    print(filename)
 
     im2 = Image.new('P', im.size, 255)
     im = im.convert('P')
@@ -66,7 +69,8 @@ for filename in os.listdir('../examples/'):
         for y in range(im.size[0]):
             pix = im.getpixel((y, x))
             temp[pix] = pix
-            if pix == 220 or pix == 227:  # these are the numbers to get
+            # these are the numbers to get
+            if pix == 220 or pix == 227:
                 im2.putpixel((y, x), 0)
 
     inletter = False
@@ -106,7 +110,7 @@ for filename in os.listdir('../examples/'):
                     guess.append((v.relation(y[0], buildvector(im3)), x))
 
         guess.sort(reverse=True)
-        print '', guess[0]
+        print('', guess[0])
         guessword = '%s%s' % (guessword, guess[0][1])
 
     if guessword == filename[:-4]:
@@ -114,11 +118,11 @@ for filename in os.listdir('../examples/'):
     else:
         wrongcount += 1
 
-
-print '======================='
 correctcount = float(correctcount)
 wrongcount = float(wrongcount)
-print 'Correct Guesses - ', correctcount
-print 'Wrong Guesses - ', wrongcount
-print 'Percentage Correct - ', correctcount / (correctcount + wrongcount) * 100.00
-print 'Percentage Wrong - ', wrongcount / (correctcount + wrongcount) * 100.00
+print('Correct Guesses - ', correctcount)
+print('Wrong Guesses - ', wrongcount)
+print('Percentage Correct - ',
+      correctcount / (correctcount + wrongcount) * 100.00)
+print('Percentage Wrong - ',
+      wrongcount / (correctcount + wrongcount) * 100.00)

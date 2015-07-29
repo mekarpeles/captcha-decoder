@@ -19,7 +19,6 @@
 from datetime import datetime
 import hashlib
 import time
-
 from PIL import Image
 
 
@@ -27,7 +26,7 @@ def format_image(im):
     timestamp = datetime.now().isoformat().split(':')[-1]
     im2 = Image.new('P', im.size, 255)
     im1 = im.convert('P')
-  
+
     temp = {}
     for x in range(im1.size[1]):
         for y in range(im1.size[0]):
@@ -43,7 +42,7 @@ def find_letters(im2):
     inletter = False
     foundletter = False
     start = 0
-    
+
     letters = []
 
     for y in range(im2.size[0]):  # slice across (y axis)
@@ -73,11 +72,3 @@ def save_letters(im2, letters):
         m.update('%s%s' % (time.time(), count))
         im3.save('./%s.gif' % (m.hexdigest()))
         count += 1
-
-
-# def segment(captcha):
-#     """Partitions the origin image into segments, each containing
-#     (hopefully) a single character.
-#     """
-#     im = Image.open(captcha)
-#     im2 = open_image(im)

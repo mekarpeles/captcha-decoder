@@ -15,10 +15,8 @@
 
 import os
 import time
-
 from PIL import Image
-
-from util import build_imgset, buildvector, crop_white
+from .util import build_imgset, buildvector, crop_white
 
 IMAGESET = build_imgset()
 
@@ -62,7 +60,7 @@ def find_partitions(im):
     inletter = False
     foundletter = False
     start, end = 0, 0
-    
+
     for y in range(im.size[0]):  # slice across
         for x in range(im.size[1]):  # slice down
             pix = im.getpixel((y, x))
@@ -116,10 +114,7 @@ def guess_characters(segments):
 
 
 def decode(captcha, outpath=''):
-    """driver/entry point for crack.py
-    currently only works with gifs
-    """
-
+    """Decodes a captcha"""
     if outpath:
         outpath = outpath.rstrip('/')
         if not os.path.exists(outpath):
