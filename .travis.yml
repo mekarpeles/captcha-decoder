@@ -13,3 +13,4 @@ script:
   - nosetests
   - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then flake8 decaptcha; fi
 cache: apt
+sudo: false
