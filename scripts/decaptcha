@@ -1,23 +1,22 @@
 #!/usr/bin/python
 
-import sys
 import os
 import argparse
+
 from decaptcha import crack
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Basic Captcha Cracker")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Basic Captcha Cracker')
     parser.add_argument('captcha', nargs='?', metavar='<img>',
-                        help="Enter the path of a captcha img file (.jpg)")
-    parser.add_argument('--out', nargs='*', default="outpath",
-                        help="Directory where output imgs should be saved" \
-                            "(default output/)")
+                        help='Enter the path of a captcha img file (.jpg)')
+    parser.add_argument('--out', nargs='*', default='outpath',
+                        help='Directory where output imgs should be saved(default output/)')
     parser.add_argument('--verbose', '-v', action='count')
     args = parser.parse_args()
     if not args.captcha:
-        raise ValueError("No captcha input image provided")
-    if args.captcha[0] is not "/":
-         args.captcha = "%s/%s" % (os.getcwd(), args.captcha)
+        raise ValueError('No captcha input image provided')
+    if args.captcha[0] is not '/':
+        args.captcha = '%s/%s' % (os.getcwd(), args.captcha)
     if args.verbose:
         print args.verbose
     try:
