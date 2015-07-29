@@ -24,6 +24,7 @@ setup(
     platforms='any',
     license='LICENSE',
     install_requires=[
+        'Pillow >= 2.9.0'
     ],
     scripts=[
         'scripts/decaptcha'
