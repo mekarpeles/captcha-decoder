@@ -1,12 +1,16 @@
 captcha-decoder
 ===============
 
+![Build Status](https://travis-ci.org/mekarpeles/captcha-decoder.png)
+
 This module takes a captcha (image) as input and partitions it into
 what it believes are n new images, where each new image is a discrete
 character found within the original captcha.
 
-This work is a derivation of an original work by bboyte01@gmail.com,
-http://www.boyter.org/decoding-captchas/.
+This work is a derivation of an original work by @boyter
+<bboyte01@gmail.com>, http://www.boyter.org/decoding-captchas/ (see
+origin tutorial at
+https://web.archive.org/web/20121012023114/http://www.wausita.com/captcha/)
 
 ## Example
 
@@ -18,10 +22,6 @@ http://www.boyter.org/decoding-captchas/.
     (1.4, 'h')
     (1.52, 'u')
     (1.5125, 'e')
-
-## Authors
-
-Abel Molina, Mek, Ben Boyter
 
 ## License 
 
@@ -36,7 +36,3 @@ The following implementations and techniques are recommended
 as more practical and accurate alternatives for this project:
 
 1. http://www.codeproject.com/Articles/106583/Handwriting-Recognition-Revisited-Kernel-Support-V
-
-## TODO
-
-Add --output dir and --url fields to decaptcha script 
