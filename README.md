@@ -52,8 +52,7 @@ The decaptcha library comes with a command line utility called `decaptca`. Runni
 # Example
 
     $ decaptcha http://www.mondor.org/img/capex.jpg  --min 0 --max 20 --limit 5 --channels 5 --tolerance 7
-    $ decaptcha https://c22blog.files.wordpress.com/2010/10/input-black.gif  --min 0 --max 20 -l 10 --channels 10 -t 0 --tolerance 10
-    $ decaptcha examples/Captcha_kwomgucxtr.jpg --limit 2 -t .2 --channels 3
+    
     Character 0 of 7:
             t (confidence of 0.839150063096)
             e (confidence of 0.827405543276)
