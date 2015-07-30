@@ -17,7 +17,7 @@ __title__ = 'Python captcha cracking utility'
 
 import sys
 from .decoder import Captcha  # NOQA
-from .decoder import autocrop, channel, monochrome, regions, decode  # NOQA
+from .decoder import trim, channel, monochrome, regions, decode  # NOQA
 from .cli import main
 
 if __name__ == '__main__':

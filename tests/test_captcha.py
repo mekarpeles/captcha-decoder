@@ -54,7 +54,7 @@ class CaptchaDecoderTest(unittest.TestCase):
                         "Captcha histogram different from expected")
 
     def test_prominant_colors(self):
-        self.assertTrue(self.captcha.prominant_colors(n=10, white=True) ==
+        self.assertTrue(self.captcha.prominant_colors(n=10) ==
                         EXPECTED_DOMINANT_COLORS,
                         "Captcha's dominant colors differ from expected")
 
@@ -67,7 +67,7 @@ class CaptchaDecoderTest(unittest.TestCase):
 
     def test_regions(self):
         sample = decaptcha.monochrome(self.captcha.channel(220, 227))
-        regions = self.captcha.regions(sample)
+        regions = decaptcha.regions(sample, threshold=1)
         self.assertTrue(regions == EXPECTED_REGIONS,
                         "Expected regions %s, instead got %s"
                         % (EXPECTED_REGIONS, regions))
@@ -78,7 +78,7 @@ class CaptchaDecoderTest(unittest.TestCase):
         are both the number 9) are mistakenly swapped.
         """
         sample = decaptcha.monochrome(self.captcha.channel(220, 227))
-        segments = self.captcha.segments(sample, crop=False)
+        segments = self.captcha.segments(sample, crop=False, tolerance=1)
         for i, segment in enumerate(segments):
             EXPECTED_SEGMENT = Image.open(TEST_SEGMENT_IMG(i+1))
             self.assertTrue(segment.histogram() ==
@@ -87,7 +87,7 @@ class CaptchaDecoderTest(unittest.TestCase):
 
     def test_guess_character(self):
         sample = decaptcha.monochrome(self.captcha.channel(220, 227))
-        regions = self.captcha.regions(sample)
+        regions = decaptcha.regions(sample)
         segment = self.captcha.segment(sample, regions[0], crop=False)
         exp_seg = Image.open(TEST_SEGMENT_IMG(1))
         self.assertTrue(segment.histogram() == exp_seg.histogram(),
