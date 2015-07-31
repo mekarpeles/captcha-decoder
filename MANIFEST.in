@@ -1,2 +1,3 @@
 recursive-include decaptcha/iconset *
 recursive-include examples *
+recursive-include data *

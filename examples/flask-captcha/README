@@ -1,0 +1,4 @@
+flask-captcha
+
+A web service which demonstrates the python decaptcha library step by
+step with intermediary image results as it attempt to crack a captcha.
